@@ -17,7 +17,7 @@
             color: white;
             font-family: Arial, sans-serif;
             text-align: center;
-            position: relative; /* For proper positioning of elements */
+            position: relative;
         }
 
         .navbar {
@@ -55,11 +55,11 @@
         }
 
         @keyframes slide {
-            0% { background-image: url('face1.jpg'); }
-            25% { background-image: url('face2.jpg'); }
-            50% { background-image: url('face3.jpg'); }
-            75% { background-image: url('face4.jpg'); }
-            100% { background-image: url('face1.jpg'); }
+            0% { background-image: url('images/face1.jpg'); }
+            25% { background-image: url('images/face2.jpg'); }
+            50% { background-image: url('images/face3.jpg'); }
+            75% { background-image: url('images/face4.jpg'); }
+            100% { background-image: url('images/face1.jpg'); }
         }
 
         h1 {
@@ -90,7 +90,7 @@
         }
 
         section {
-            height: 100vh; /* Each section takes the full viewport height */
+            height: 100vh;
             padding: 50px;
             background: rgba(0, 0, 0, 0.7);
             display: flex;
@@ -109,12 +109,10 @@
     <div class="slideshow"></div>
     <h1>Welcome to the Face Recognition Attendance System!</h1>
 
-    <!-- Button to run facial recognition -->
     <form action="#run-facial-recognition" method="POST">
         <button type="submit" class="button" aria-label="Run Facial Recognition">Run Facial Recognition</button>
     </form>
 
-    <!-- Button to stop facial recognition -->
     <form action="#stop-recognition" method="POST">
         <button type="submit" class="button" aria-label="Stop Facial Recognition">Stop Facial Recognition</button>
     </form>
@@ -125,12 +123,8 @@
         <input type="file" name="file" id="file-input" accept=".jpg">
     </form>
 
-    <!-- Display flash messages for errors or success -->
-    <div id="flash-messages">
-        <!-- Placeholder for flash messages -->
-    </div>
+    <div id="flash-messages"></div>
 
-    <!-- Sections for navigation -->
     <section id="about-us">
         <h2>About Us</h2>
         <p>This section provides information about the attendance system.</p>
@@ -147,10 +141,9 @@
     </section>
 
     <script>
-        // Smooth scrolling for navigation links
         document.querySelectorAll('.navbar a').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
-                e.preventDefault(); // Prevent default anchor click behavior
+                e.preventDefault();
                 const targetId = this.getAttribute('href').substring(1);
                 const targetElement = document.getElementById(targetId);
                 if (targetElement) {
@@ -171,14 +164,12 @@
             const flashMessagesDiv = document.getElementById('flash-messages');
             flashMessagesDiv.innerHTML = `<div class="${type}">${message}</div>`;
             setTimeout(() => {
-                flashMessagesDiv.innerHTML = ''; // Clear message after 3 seconds
+                flashMessagesDiv.innerHTML = '';
             }, 3000);
         }
 
-        // Example usage after form submission
         document.getElementById('file-upload-form').addEventListener('submit', function(e) {
-            e.preventDefault(); // Prevent default form submission
-            // Simulate file upload
+            e.preventDefault();
             showFlashMessage("File uploaded successfully!", "success");
         });
     </script>
