@@ -52,11 +52,11 @@
         }
 
         @keyframes slide {
-            0% { background-image: url('{{ url_for("static", filename="face1.jpg") }}'); }
-            25% { background-image: url('{{ url_for("static", filename="face2.jpg") }}'); }
-            50% { background-image: url('{{ url_for("static", filename="face3.jpg") }}'); }
-            75% { background-image: url('{{ url_for("static", filename="face4.jpg") }}'); }
-            100% { background-image: url('{{ url_for("static", filename="face1.jpg") }}'); }
+            0% { background-image: url('images/face1.jpg'); }
+            25% { background-image: url('images/face2.jpg'); }
+            50% { background-image: url('images/face3.jpg'); }
+            75% { background-image: url('images/face4.jpg'); }
+            100% { background-image: url('images/face1.jpg'); }
         }
 
         h1 {
@@ -102,39 +102,33 @@
 </head>
 <body>
     <div class="navbar">
-        <a href="{{ url_for('about_us') }}">About Us</a>
+        <a href="#about-us">About Us</a>
         <a href="#" id="upload-button">Upload</a>
-        <a href="{{ url_for('manage_attendance') }}">Manage Attendance</a>
+        <a href="#manage-attendance">Manage Attendance</a>
     </div>
     <div class="slideshow"></div>
-    <h1>Welcome to My Flask App with a Background Image!</h1>
+    <h1>Welcome to My Simple GitHub Page!</h1>
 
-    <!-- Form to run facial recognition -->
-    <form action="{{ url_for('run_face_recognition') }}" method="POST">
+    <!-- Button to run facial recognition -->
+    <form action="#run-facial-recognition" method="POST">
         <button type="submit" class="button">Run Facial Recognition</button>
     </form>
 
-    <!-- Form to stop facial recognition -->
-    <form action="{{ url_for('stop_recognition') }}" method="POST">
+    <!-- Button to stop facial recognition -->
+    <form action="#stop-recognition" method="POST">
         <button type="submit" class="button">Stop Facial Recognition</button>
     </form>
 
-    <a href="{{ url_for('view_attendance') }}" class="button">View Attendance</a>
+    <a href="#view-attendance" class="button">View Attendance</a>
 
-    <form id="file-upload-form" action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data">
+    <form id="file-upload-form" action="#upload" method="POST" enctype="multipart/form-data">
         <input type="file" name="file" id="file-input" accept=".jpg">
     </form>
 
     <!-- Display flash messages for errors or success -->
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            <ul>
-                {% for message in messages %}
-                    <li class="flash-message {% if loop.index0 == 0 %}flash-success{% else %}flash-error{% endif %}">{{ message }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-    {% endwith %}
+    <div id="flash-messages">
+        <!-- Placeholder for flash messages -->
+    </div>
 
     <script>
         document.getElementById('upload-button').addEventListener('click', function() {
