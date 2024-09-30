@@ -111,12 +111,12 @@
 
     <!-- Button to run facial recognition -->
     <form action="#run-facial-recognition" method="POST">
-        <button type="submit" class="button">Run Facial Recognition</button>
+        <button type="submit" class="button" aria-label="Run Facial Recognition">Run Facial Recognition</button>
     </form>
 
     <!-- Button to stop facial recognition -->
     <form action="#stop-recognition" method="POST">
-        <button type="submit" class="button">Stop Facial Recognition</button>
+        <button type="submit" class="button" aria-label="Stop Facial Recognition">Stop Facial Recognition</button>
     </form>
 
     <a href="#view-attendance" class="button">View Attendance</a>
@@ -165,6 +165,21 @@
 
         document.getElementById('file-input').addEventListener('change', function() {
             document.getElementById('file-upload-form').submit();
+        });
+
+        function showFlashMessage(message, type) {
+            const flashMessagesDiv = document.getElementById('flash-messages');
+            flashMessagesDiv.innerHTML = `<div class="${type}">${message}</div>`;
+            setTimeout(() => {
+                flashMessagesDiv.innerHTML = ''; // Clear message after 3 seconds
+            }, 3000);
+        }
+
+        // Example usage after form submission
+        document.getElementById('file-upload-form').addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent default form submission
+            // Simulate file upload
+            showFlashMessage("File uploaded successfully!", "success");
         });
     </script>
 </body>
