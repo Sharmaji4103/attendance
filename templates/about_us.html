@@ -24,7 +24,6 @@
             display: flex; /* Flexbox for horizontal layout */
             padding: 15px; /* Padding for the navbar */
             z-index: 1; /* Ensure it's above other elements */
-            background: rgba(0, 0, 0, 0.7); /* Background for better visibility */
         }
 
         .navbar a {
@@ -83,14 +82,15 @@
 </head>
 <body>
     <div class="navbar">
-        <a href="/">Home</a>
-        <a href="/about">About Us</a>
-        <a href="/upload">Upload</a>
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('about_us') }}">About Us</a>
+        <a href="{{ url_for('upload') }}">Upload</a>
+        <!-- Removed download link -->
     </div>
 
     <div class="about-container">
         <div class="about-image">
-            <img src="static/face3.jpg" alt="Project Image"> <!-- Adjust path if needed -->
+            <img src="{{ url_for('static', filename='face3.jpg') }}" alt="Project Image">
         </div>
         <div class="about-info">
             <h1>About This Project</h1>
