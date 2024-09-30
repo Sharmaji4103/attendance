@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Attendance System</title>
+    <title>Simple Background Image Slideshow</title>
     <style>
         body {
             margin: 0;
@@ -17,18 +17,15 @@
             color: white;
             font-family: Arial, sans-serif;
             text-align: center;
-            position: relative;
         }
 
         .navbar {
             position: absolute;
-            top: 20px;
-            right: 20px;
+            top: 0;
+            right: 0;
             display: flex;
             padding: 15px;
             z-index: 1;
-            background: rgba(0, 0, 0, 0.5);
-            border-radius: 5px;
         }
 
         .navbar a {
@@ -55,17 +52,16 @@
         }
 
         @keyframes slide {
-            0% { background-image: url('face1.jpg'); }
-            25% { background-image: url('face2.jpg'); }
-            50% { background-image: url('face3.jpg'); }
-            75% { background-image: url('face4.jpg'); }
-            100% { background-image: url('face1.jpg'); }
+            0% { background-image: url('{{ url_for("static", filename="face1.jpg") }}'); }
+            25% { background-image: url('{{ url_for("static", filename="face2.jpg") }}'); }
+            50% { background-image: url('{{ url_for("static", filename="face3.jpg") }}'); }
+            75% { background-image: url('{{ url_for("static", filename="face4.jpg") }}'); }
+            100% { background-image: url('{{ url_for("static", filename="face1.jpg") }}'); }
         }
 
         h1 {
             font-size: 3em;
             margin-bottom: 20px;
-            z-index: 2;
         }
 
         .button {
@@ -78,7 +74,6 @@
             border-radius: 5px;
             font-size: 1.2em;
             transition: background-color 0.3s ease;
-            z-index: 2;
         }
 
         .button:hover {
@@ -89,88 +84,65 @@
             display: none;
         }
 
-        section {
-            height: 100vh;
-            padding: 50px;
-            background: rgba(0, 0, 0, 0.7);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
+        /* Flash message styles */
+        .flash-message {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .flash-success {
+            background-color: rgba(76, 175, 80, 0.8);
+        }
+
+        .flash-error {
+            background-color: rgba(244, 67, 54, 0.8);
         }
     </style>
 </head>
 <body>
     <div class="navbar">
-        <a href="#about-us">About Us</a>
+        <a href="{{ url_for('about_us') }}">About Us</a>
         <a href="#" id="upload-button">Upload</a>
-        <a href="#manage-attendance">Manage Attendance</a>
+        <a href="{{ url_for('manage_attendance') }}">Manage Attendance</a>
     </div>
     <div class="slideshow"></div>
-    <h1>Welcome to the Face Recognition Attendance System!</h1>
+    <h1>Welcome to My Flask App with a Background Image!</h1>
 
-    <form action="#run-facial-recognition" method="POST">
-        <button type="submit" class="button" aria-label="Run Facial Recognition">Run Facial Recognition</button>
+    <!-- Form to run facial recognition -->
+    <form action="{{ url_for('run_face_recognition') }}" method="POST">
+        <button type="submit" class="button">Run Facial Recognition</button>
     </form>
 
-    <form action="#stop-recognition" method="POST">
-        <button type="submit" class="button" aria-label="Stop Facial Recognition">Stop Facial Recognition</button>
+    <!-- Form to stop facial recognition -->
+    <form action="{{ url_for('stop_recognition') }}" method="POST">
+        <button type="submit" class="button">Stop Facial Recognition</button>
     </form>
 
-    <a href="#view-attendance" class="button">View Attendance</a>
+    <a href="{{ url_for('view_attendance') }}" class="button">View Attendance</a>
 
-    <form id="file-upload-form" action="#upload" method="POST" enctype="multipart/form-data">
+    <form id="file-upload-form" action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data">
         <input type="file" name="file" id="file-input" accept=".jpg">
     </form>
 
-    <div id="flash-messages"></div>
-
-    <section id="about-us">
-        <h2>About Us</h2>
-        <p>This section provides information about the attendance system.</p>
-    </section>
-
-    <section id="upload">
-        <h2>Upload</h2>
-        <p>This section allows you to upload files for facial recognition.</p>
-    </section>
-
-    <section id="manage-attendance">
-        <h2>Manage Attendance</h2>
-        <p>This section is for managing attendance records.</p>
-    </section>
+    <!-- Display flash messages for errors or success -->
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li class="flash-message {% if loop.index0 == 0 %}flash-success{% else %}flash-error{% endif %}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
 
     <script>
-        document.querySelectorAll('.navbar a').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href').substring(1);
-                const targetElement = document.getElementById(targetId);
-                if (targetElement) {
-                    targetElement.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
-        });
-
         document.getElementById('upload-button').addEventListener('click', function() {
             document.getElementById('file-input').click();
         });
 
         document.getElementById('file-input').addEventListener('change', function() {
             document.getElementById('file-upload-form').submit();
-        });
-
-        function showFlashMessage(message, type) {
-            const flashMessagesDiv = document.getElementById('flash-messages');
-            flashMessagesDiv.innerHTML = `<div class="${type}">${message}</div>`;
-            setTimeout(() => {
-                flashMessagesDiv.innerHTML = '';
-            }, 3000);
-        }
-
-        document.getElementById('file-upload-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            showFlashMessage("File uploaded successfully!", "success");
         });
     </script>
 </body>
