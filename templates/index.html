@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Attendance system</title>
+    <title>Attendance System</title>
     <style>
         body {
             margin: 0;
@@ -17,15 +17,18 @@
             color: white;
             font-family: Arial, sans-serif;
             text-align: center;
+            position: relative; /* For proper positioning of elements */
         }
 
         .navbar {
             position: absolute;
-            top: 0;
-            right: 0;
+            top: 20px;
+            right: 20px;
             display: flex;
             padding: 15px;
             z-index: 1;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 5px;
         }
 
         .navbar a {
@@ -62,6 +65,7 @@
         h1 {
             font-size: 3em;
             margin-bottom: 20px;
+            z-index: 2;
         }
 
         .button {
@@ -74,6 +78,7 @@
             border-radius: 5px;
             font-size: 1.2em;
             transition: background-color 0.3s ease;
+            z-index: 2;
         }
 
         .button:hover {
@@ -82,21 +87,6 @@
 
         #file-upload-form {
             display: none;
-        }
-
-        /* Flash message styles */
-        .flash-message {
-            margin: 10px 0;
-            padding: 10px;
-            border-radius: 5px;
-        }
-
-        .flash-success {
-            background-color: rgba(76, 175, 80, 0.8);
-        }
-
-        .flash-error {
-            background-color: rgba(244, 67, 54, 0.8);
         }
     </style>
 </head>
@@ -107,7 +97,7 @@
         <a href="#manage-attendance">Manage Attendance</a>
     </div>
     <div class="slideshow"></div>
-    <h1>Welcome to face recognition attendance system!</h1>
+    <h1>Welcome to the Face Recognition Attendance System!</h1>
 
     <!-- Button to run facial recognition -->
     <form action="#run-facial-recognition" method="POST">
@@ -131,6 +121,18 @@
     </div>
 
     <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('.navbar a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault(); // Prevent default anchor click behavior
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
         document.getElementById('upload-button').addEventListener('click', function() {
             document.getElementById('file-input').click();
         });
