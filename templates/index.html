@@ -88,6 +88,16 @@
         #file-upload-form {
             display: none;
         }
+
+        section {
+            height: 100vh; /* Each section takes the full viewport height */
+            padding: 50px;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
     </style>
 </head>
 <body>
@@ -119,6 +129,22 @@
     <div id="flash-messages">
         <!-- Placeholder for flash messages -->
     </div>
+
+    <!-- Sections for navigation -->
+    <section id="about-us">
+        <h2>About Us</h2>
+        <p>This section provides information about the attendance system.</p>
+    </section>
+
+    <section id="upload">
+        <h2>Upload</h2>
+        <p>This section allows you to upload files for facial recognition.</p>
+    </section>
+
+    <section id="manage-attendance">
+        <h2>Manage Attendance</h2>
+        <p>This section is for managing attendance records.</p>
+    </section>
 
     <script>
         // Smooth scrolling for navigation links
