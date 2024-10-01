@@ -4,6 +4,8 @@ import face_recognition as fr
 import numpy as np
 from datetime import datetime
 from flask import Flask, render_template, request, redirect, flash, url_for
+from werkzeug.utils import secure_filename
+import threading
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
@@ -17,6 +19,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 # Global variable to control facial recognition state
 facial_recognition_running = False
 cap = None  # Webcam capture variable
+lock = threading.Lock()  # To ensure thread safety
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -75,7 +78,8 @@ def run_face_recognition():
         flash("Facial recognition is already running.")
         return redirect(url_for('index'))
 
-    facial_recognition_running = True
+    with lock:
+        facial_recognition_running = True
     cap = cv2.VideoCapture(0)
 
     if not cap.isOpened():
@@ -134,9 +138,9 @@ def run_face_recognition():
         finally:
             cap.release()
             cv2.destroyAllWindows()
-            facial_recognition_running = False
+            with lock:
+                facial_recognition_running = False
 
-    import threading
     recognition_thread = threading.Thread(target=process_recognition)
     recognition_thread.start()
 
@@ -148,7 +152,8 @@ def stop_recognition():
     if not facial_recognition_running:
         flash("Facial recognition is not running.")
     else:
-        facial_recognition_running = False
+        with lock:
+            facial_recognition_running = False
         flash("Facial recognition stopped.")
 
     return redirect(url_for('index'))
