@@ -3,3 +3,8 @@ opencv-python
 numpy
 Pillow
 face-recognition
+pip install dlib==19.22.0
+flask-cors
+requests
+gunicorn
+pandas
