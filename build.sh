@@ -1,2 +1,3 @@
-pip install -r requirements.txt
-apt-get install build-essential
+#!/bin/bash
+apt-get update
+apt-get install -y cmake
