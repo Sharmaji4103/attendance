@@ -3,3 +3,8 @@ opencv-python
 numpy
 Pillow
 face-recognition
+dlib
+flask-cors
+requests
+gunicorn
+pandas
